@@ -11,7 +11,7 @@ app.get('/greeting/:name', (req, res) => {
 
 //tip calculator
 app.get('/tip/:total/:tipPercentage', (req, res) => {
-    res.send('Whats up ' + req.params.name + ' Its so great to see you!');
+    res.send('Your tip is ' + req.params.total * req.params.tipPercentage / 100);
   });
 
 app.listen(3000);
