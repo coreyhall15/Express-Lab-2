@@ -15,3 +15,11 @@ app.get('/tip/:total/:tipPercentage', (req, res) => {
   });
 
 app.listen(3000);
+
+
+//Magic 8 Ball
+app.get('/magic', (req, res) => {
+    res.send('Will I become a millionaire?');
+  });
+
+app.listen(3000);
