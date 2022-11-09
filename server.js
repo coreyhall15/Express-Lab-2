@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+//const path = require("path");
+//const bodyParser = require("body-parser");
 console.log('listening to PORT request')
 
 //Greetings
@@ -21,7 +23,7 @@ app.get('/tip/:total/:tipPercentage', (req, res) => {
     res.send('Your tip is ' + req.params.total * req.params.tipPercentage / 100);
   });
 
-app.listen(3000);
+app.listen(4000);
 
 
 //Magic 8 Ball
@@ -32,17 +34,22 @@ So if the user hits that route and asks a question of "Will I be a Millionaire" 
 Send the magic 8 ball response back between html <h1>tags
 Use this array of Magic 8 ball responses..... */
 
-const response = require('./models/response.js');
-module.exports = response;
 
-app.get('/magic/Will%20I%20Be%20A%20Millionaire', (req, res) => {
-    res.send("<h1>Will I become a millionaire?</h1>");
-    
-    });
+const eightBallResponse = ["It is certain",
+ "It is decidedly so", "Without a doubt", "Yes definitely","You may rely on it", "As I see it yes", "Most likely", "Outlook good","Yes", "Signs point to yes", "Reply hazy try again", "Ask again later","Better not tell you now", "Cannot predict now", "Concentrate and ask again","Don't count on it", "My reply is no", "My sources say no","Outlook not so good", "Very doubtful"]
 
-  
 
-app.listen(3001);
+//app.get('/magic/Will%20I%20Be%20A%20Millionaire', (req, res) => {
+  //res.send('Will I Become a Millionaire') 
+//});
+
+app.get('/magic/:questions', (req, res) => {
+  res.send(`${req.params.questions}` + eightBallResponse[Math.floor(Math.random()*eightBallResponse.length)])
+});
+
+app.listen(3000, () => {
+  console.log('listening to port 3000')
+})
 
 
 //Take One Down and Pass it Around
@@ -62,16 +69,16 @@ Add a link to start over, which directs the user back to the home page.
 
 
 app.get("/", (req, res) => {
-    res.send(`<h3>99 Bottles of beer on the wall</h3>
-      <a href ="/98">Take one down, pass it around</a>`);
-  });
-  
-  app.get("/:numOfBottles", (req, res) => {
-    let bottleNumbers = req.params.numOfBottles;
-    if (bottleNumbers > 0) {
-      res.send(`<h3>${bottleNumbers} Bottles of beer on the wall</h3>
-          <a href ="/${bottleNumbers - 1}">Take one down, pass it around</a>`);
-    } else {
-      res.send(`No more beers! <a href ="/">Please start over</a>`);
-    }
-  });
+  res.send(`<h3>99 Bottles of beer on the wall</h3>
+    <a href ="/98">Take one down, pass it around</a>`);
+});
+app.get("/:numOfBottles", (req, res) => {
+  let bottleNumbers = req.params.numOfBottles;
+  if (bottleNumbers > 0) {
+    res.send(`<h3>${bottleNumbers} Bottles of beer on the wall</h3>
+        <a href ="/${bottleNumbers - 1}">Take One Down, Pass it Around</a>`);
+  } else {
+    res.send(`No more beers! <a href ="/">Please start over</a>`);
+  }
+});
+
